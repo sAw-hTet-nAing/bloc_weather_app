@@ -1,5 +1,7 @@
 import 'package:bloc_weather_app/repos/home_repo.dart';
-import 'package:bloc_weather_app/screens/home_screen/home_screen.dart';
+import 'package:bloc_weather_app/repos/splash_repo.dart';
+
+import 'package:bloc_weather_app/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,18 +14,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<HomeRepo>(create: (context) => HomeRepo()),
+        RepositoryProvider<SplashRepo>(create: (context) => SplashRepo()),
+      ],
+      child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
         // home: const HomeScreen(),
-        home: RepositoryProvider(
-          create: (contxt) => HomeRepo(),
-          child: const HomeScreen(),
-        )
+
+        home: const SplashScreen(),
+
         // )
-        );
+      ),
+    );
   }
 }

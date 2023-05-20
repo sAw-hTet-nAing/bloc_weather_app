@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 @immutable
 abstract class HomeEvent extends Equatable {
@@ -8,13 +9,14 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadUserLocationEvent extends HomeEvent {
-  const LoadUserLocationEvent();
+class HomeLoadingEvent extends HomeEvent {
   @override
   List<Object> get props => [];
 }
 
-class LoadHomeEvent extends HomeEvent {
+class LoadedHomeEvent extends HomeEvent {
+  const LoadedHomeEvent(this.position);
+  final Position position;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [position];
 }

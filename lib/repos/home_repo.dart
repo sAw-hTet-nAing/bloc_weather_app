@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:bloc_weather_app/modles/current_weather_model.dart';
 import 'package:bloc_weather_app/modles/focast_weather_model.dart';
 import 'package:bloc_weather_app/utils/app_constants.dart';
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'package:http/http.dart';
 
 class HomeRepo {
-  Future<CurrentWeatherModel> getCurrentWeather() async {
-    String endPoint = "current.json?key=${AppConstant.apiKey}&q=London&aqi=yes";
+  Future<CurrentWeatherModel> getCurrentWeather({required String q}) async {
+    String endPoint = "current.json?key=${AppConstant.apiKey}&q=$q&aqi=yes";
     Response response = await get(Uri.parse("${AppConstant.baseUrl}$endPoint"));
 
     if (response.statusCode == 200) {
@@ -23,9 +21,9 @@ class HomeRepo {
     }
   }
 
-  Future<FocastWeatherModel> getForcast() async {
+  Future<FocastWeatherModel> getForcast({required String q}) async {
     String endPoint =
-        "forecast.json?key=${AppConstant.apiKey}&q=London&days=7&aqi=no&alerts=no";
+        "forecast.json?key=${AppConstant.apiKey}&q=$q&days=7&aqi=no&alerts=no";
 
     Response response = await get(Uri.parse("${AppConstant.baseUrl}$endPoint"));
 

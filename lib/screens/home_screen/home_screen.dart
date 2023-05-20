@@ -7,6 +7,7 @@ import 'package:bloc_weather_app/screens/home_screen/home_state.dart';
 import 'package:bloc_weather_app/screens/home_screen/home_widgets/current_weather_widget.dart';
 import 'package:bloc_weather_app/screens/home_screen/home_widgets/focast_title_widget.dart';
 import 'package:bloc_weather_app/screens/home_screen/home_widgets/forecast_weather_widget.dart';
+
 import 'package:bloc_weather_app/utils/app_color.dart';
 import 'package:bloc_weather_app/utils/dimesions.dart';
 import 'package:bloc_weather_app/utils/text_style.dart';
@@ -15,9 +16,14 @@ import 'package:bloc_weather_app/widgets/app_loading_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Position position;
+  const HomeScreen({
+    super.key,
+    required this.position,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,13 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider(
       create: (context) => HomeBloc(
           homeRepo: RepositoryProvider.of<HomeRepo>(context), context: context)
-        ..add(LoadHomeEvent()),
+        ..add(LoadedHomeEvent(widget.position)),
       child: Container(
         decoration: const BoxDecoration(gradient: AppColor.backGroundGr),
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             elevation: 0,
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.transparent,
             centerTitle: true,
             title: Text(
@@ -74,6 +81,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     forecastWeatherWidget(forecastWeather: forecastWeather)
                   ],
+                ),
+              );
+            }
+            if (homestate is HomeErrorState) {
+              return Center(
+                child: Text(
+                  homestate.error,
+                  style: MyTextStyle.normalText.copyWith(color: Colors.red),
                 ),
               );
             }
