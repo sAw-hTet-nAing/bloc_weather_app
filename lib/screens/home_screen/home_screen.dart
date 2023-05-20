@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocProvider(
       create: (context) => HomeBloc(
           homeRepo: RepositoryProvider.of<HomeRepo>(context), context: context)
-        ..add(LoadedHomeEvent(widget.position)),
+        ..add(LoadedHomeEvent(widget.position, false)),
       child: Container(
         decoration: const BoxDecoration(gradient: AppColor.backGroundGr),
         child: Scaffold(
@@ -54,7 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
             if (homestate is HomeLoadingState) {
               return appLoadingWidget();
             }
+
             if (homestate is HomeLoadedState) {
+              bool isFav = homestate.isFav;
               CurrentWeatherModel currentWeather = homestate.currentWeather;
               FocastWeatherModel forecastWeather = homestate.focastWeatherModel;
               return SingleChildScrollView(
@@ -71,7 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         humidity: currentWeather.current!.humidity,
                         conditionText: currentWeather.current!.condition!.text!,
                         cloud: currentWeather.current!.cloud,
-                        icon: currentWeather.current!.condition!.icon!),
+                        icon: currentWeather.current!.condition!.icon!,
+                        onPress: () {
+                          BlocProvider.of<HomeBloc>(context)
+                              .add(LoadedHomeEvent(widget.position, isFav));
+                        },
+                        isFav: isFav),
                     SizedBox(
                       height: Dimesion.height40,
                     ),

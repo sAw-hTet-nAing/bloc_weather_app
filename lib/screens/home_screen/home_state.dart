@@ -22,11 +22,12 @@ class GetUserLocationState extends HomeState {
 }
 
 class HomeLoadedState extends HomeState {
-  HomeLoadedState(this.currentWeather, this.focastWeatherModel);
+  HomeLoadedState(this.currentWeather, this.focastWeatherModel, this.isFav);
   final CurrentWeatherModel currentWeather;
   final FocastWeatherModel focastWeatherModel;
+  final bool isFav;
   @override
-  List<Object?> get props => [currentWeather, focastWeatherModel];
+  List<Object?> get props => [currentWeather, focastWeatherModel, isFav];
 }
 
 class HomeErrorState extends HomeState {

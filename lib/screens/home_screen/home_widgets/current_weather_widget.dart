@@ -10,18 +10,34 @@ Widget currentWeatherWidget(
     required int humidity,
     required String conditionText,
     required int cloud,
-    required String icon}) {
+    required String icon,
+    required bool isFav,
+    required onPress}) {
   return Column(
     children: [
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          cityName,
-          style: MyTextStyle.titleText,
-        ),
-      ),
-      SizedBox(
-        height: Dimesion.height10,
+      Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: Dimesion.width30, vertical: Dimesion.height10),
+            child: Text(
+              cityName,
+              style: MyTextStyle.titleText,
+            ),
+          ),
+          Positioned(
+            right: -1,
+            top: 0,
+            child: InkWell(
+              onTap: onPress,
+              child: Icon(
+                isFav ? Icons.favorite_rounded : Icons.favorite_outline_rounded,
+                color: isFav ? Colors.white : Colors.grey,
+                size: Dimesion.iconSize16,
+              ),
+            ),
+          ),
+        ],
       ),
       Text(
         "${double.parse(temp.toString()).toStringAsFixed(0)} \u2103",

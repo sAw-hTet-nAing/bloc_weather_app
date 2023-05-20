@@ -22,7 +22,7 @@ Widget forecastWeatherWidget({required FocastWeatherModel forecastWeather}) {
                 if (forecastWeather.forecast!.forecastday![index].date!.day ==
                     DateTime.now().day)
                   SizedBox(
-                    width: Dimesion.screenWidth * 0.3,
+                    width: Dimesion.screenWidth * 0.23,
                     child: Text(
                       "Today",
                       style: MyTextStyle.normalText,
@@ -32,7 +32,7 @@ Widget forecastWeatherWidget({required FocastWeatherModel forecastWeather}) {
                         .forecast!.forecastday![index].date!.day ==
                     DateTime.now().day - 1)
                   SizedBox(
-                    width: Dimesion.screenWidth * 0.3,
+                    width: Dimesion.screenWidth * 0.23,
                     child: Text(
                       "YesterDay",
                       style: MyTextStyle.normalText,
@@ -40,7 +40,7 @@ Widget forecastWeatherWidget({required FocastWeatherModel forecastWeather}) {
                   )
                 else
                   SizedBox(
-                    width: Dimesion.screenWidth * 0.3,
+                    width: Dimesion.screenWidth * 0.23,
                     child: Text(
                       Utils.dateFormat.format(
                           forecastWeather.forecast!.forecastday![index].date!),

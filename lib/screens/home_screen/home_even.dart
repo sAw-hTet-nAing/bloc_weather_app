@@ -15,8 +15,9 @@ class HomeLoadingEvent extends HomeEvent {
 }
 
 class LoadedHomeEvent extends HomeEvent {
-  const LoadedHomeEvent(this.position);
+  const LoadedHomeEvent(this.position, this.isFav);
   final Position position;
+  final bool isFav;
   @override
-  List<Object> get props => [position];
+  List<Object> get props => [position, isFav];
 }
